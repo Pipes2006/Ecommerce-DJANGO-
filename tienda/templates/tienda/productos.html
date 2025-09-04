@@ -1,0 +1,21 @@
+{% extends 'tienda/base.html' %}
+
+{% block content %}
+<h2>Productos</h2>
+<div class="productos-lista">
+	{% for producto in productos %}
+		<div class="producto-item">
+			<h3>{{ producto.nombre }}</h3>
+			{% if producto.imagen %}
+				<img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" width="150">
+			{% endif %}
+			<p><strong>Descripción:</strong> {{ producto.descripcion }}</p>
+			<p><strong>Precio:</strong> ${{ producto.precio }}</p>
+			<p><strong>Stock:</strong> {{ producto.stock }}</p>
+			<p><strong>Categoría:</strong> {{ producto.categoria.nombre_categoria }}</p>
+		</div>
+	{% empty %}
+		<p>No hay productos disponibles.</p>
+	{% endfor %}
+</div>
+{% endblock %}

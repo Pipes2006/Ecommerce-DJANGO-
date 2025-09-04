@@ -2,13 +2,23 @@
 
 {% block content %}
 <h2>Productos disponibles</h2>
-<div class="productos">
-        <div class="producto">
+<div class="productos-lista">
+    {% for producto in productos %}
+        <div class="producto-item">
             <h3>{{ producto.nombre }}</h3>
-            <p>{{ producto.descripcion }}</p>
-            <p><strong>${{ producto.precio }}</strong></p>
-            <button>Añadir al carrito</button>
+            {% if producto.imagen %}
+                <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" width="150">
+            {% endif %}
+            <p><strong>Descripción:</strong> {{ producto.descripcion }}</p>
+            <p><strong>Precio:</strong> ${{ producto.precio }}</p>
+            <p><strong>Stock:</strong> {{ producto.stock }}</p>
+            <p><strong>Categoría:</strong> {{ producto.categoria.nombre_categoria }}</p>
+            <label for="cantidad-{{ producto.id }}">Cantidad:</label>
+            <input type="number" id="cantidad-{{ producto.id }}" class="input-cantidad" min="1" max="{{ producto.stock }}" value="1" style="width:60px;">
+            <button class="btn-agregar-carrito" data-id="{{ producto.id }}" data-nombre="{{ producto.nombre }}" data-precio="{{ producto.precio }}" data-stock="{{ producto.stock }}" data-imagen="{% if producto.imagen %}{{ producto.imagen.url }}{% endif %}">Agregar al carrito</button>
         </div>
-   
+    {% empty %}
+        <p>No hay productos disponibles.</p>
+    {% endfor %}
 </div>
 {% endblock %}

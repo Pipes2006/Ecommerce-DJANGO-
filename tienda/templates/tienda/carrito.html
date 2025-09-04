@@ -1,0 +1,40 @@
+{% extends 'tienda/base.html' %}
+
+{% block content %}
+<h2>Carrito de compras</h2>
+<div id="carrito-lista"></div>
+<div id="carrito-total"></div>
+<script>
+function renderCarrito() {
+	let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+	let html = '';
+	let total = 0;
+	if (carrito.length === 0) {
+		html = '<p>El carrito está vacío.</p>';
+	} else {
+		html += '<table><tr><th>Imagen</th><th>Producto</th><th>Precio</th><th>Cantidad</th><th>Subtotal</th><th>Eliminar</th></tr>';
+		carrito.forEach((item, idx) => {
+			let subtotal = item.precio * item.cantidad;
+			total += subtotal;
+			let imgHtml = item.imagen ? `<img src="${item.imagen}" alt="${item.nombre}" width="60">` : '';
+			html += `<tr><td>${imgHtml}</td><td>${item.nombre}</td><td>$${item.precio}</td><td>${item.cantidad}</td><td>$${subtotal.toFixed(2)}</td><td><button class='btn-eliminar' data-idx='${idx}'>🗑️</button></td></tr>`;
+		});
+		html += '</table>';
+	}
+	document.getElementById('carrito-lista').innerHTML = html;
+	document.getElementById('carrito-total').innerHTML = '<h3>Total: $' + total.toFixed(2) + '</h3>';
+}
+document.addEventListener('DOMContentLoaded', function() {
+	renderCarrito();
+	document.getElementById('carrito-lista').addEventListener('click', function(e) {
+		if (e.target.classList.contains('btn-eliminar')) {
+			let idx = parseInt(e.target.dataset.idx);
+			let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+			carrito.splice(idx, 1);
+			localStorage.setItem('carrito', JSON.stringify(carrito));
+			renderCarrito();
+		}
+	});
+});
+</script>
+{% endblock %}
