@@ -4,3 +4,9 @@ from .models import Producto
 def home(request):
     productos = Producto.objects.all()
     return render(request, 'tienda/index.html', {'productos': productos})
+
+def productos(request):
+    return render(request, 'tienda/productos.html')
+
+def carrito(request):
+    return render(request, 'tienda/carrito.html')
