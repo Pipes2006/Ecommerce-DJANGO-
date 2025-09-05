@@ -1,0 +1,73 @@
+
+{% extends 'tienda/base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Pago</h2>
+<div class="pago-container" style="max-width:500px;margin:0 auto;text-align:center;">
+    <form id="form-pago" style="margin-bottom:24px;">
+        <div style="margin-bottom:12px;">
+            <input type="text" id="nombre" name="nombre" placeholder="Nombre" required style="width:90%;padding:8px;">
+        </div>
+        <div style="margin-bottom:12px;">
+            <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos" required style="width:90%;padding:8px;">
+        </div>
+        <div style="margin-bottom:12px;">
+            <input type="email" id="email" name="email" placeholder="Email" required style="width:90%;padding:8px;">
+        </div>
+        <div style="margin-bottom:12px;">
+            <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" required style="width:90%;padding:8px;">
+        </div>
+        <div style="margin-bottom:12px;">
+            <input type="text" id="direccion" name="direccion" placeholder="Dirección" required style="width:90%;padding:8px;">
+        </div>
+        <button type="submit" class="btn-agregar-carrito" style="width:100%;font-size:1.1em;">Confirmar pago</button>
+    </form>
+    <div style="margin-bottom:18px;">
+        <img src="{% static 'tienda/img/QR Personal.jpeg' %}" alt="QR de pago" style="width:220px;border-radius:12px;box-shadow:0 2px 8px #1565c033;">
+    </div>
+    <div id="temporizador" style="font-size:1.2em;color:#1565c0;margin-bottom:18px;"></div>
+    <div id="mensaje-pago" style="font-size:1.1em;color:#d32f2f;"></div>
+</div>
+<script>
+let tiempoRestante = 600; // 10 minutos
+let temporizador = document.getElementById('temporizador');
+let timerInterval = setInterval(function() {
+    let min = Math.floor(tiempoRestante / 60);
+    let seg = tiempoRestante % 60;
+    temporizador.textContent = `Tiempo restante para pagar: ${min.toString().padStart(2,'0')}:${seg.toString().padStart(2,'0')}`;
+    if (tiempoRestante <= 0) {
+        clearInterval(timerInterval);
+        document.getElementById('mensaje-pago').textContent = 'El tiempo expiró. El pago ha sido cancelado.';
+        document.getElementById('form-pago').style.display = 'none';
+    }
+    tiempoRestante--;
+}, 1000);
+
+document.getElementById('form-pago').addEventListener('submit', function(e) {
+    e.preventDefault();
+    let nombre = document.getElementById('nombre').value.trim();
+    let apellidos = document.getElementById('apellidos').value.trim();
+    let email = document.getElementById('email').value.trim();
+    let telefono = document.getElementById('telefono').value.trim();
+    let direccion = document.getElementById('direccion').value.trim();
+    let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+    let total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+    fetch('', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({nombre, apellidos, email, telefono, direccion, carrito, total})
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('mensaje-pago').style.color = '#388e3c';
+            document.getElementById('mensaje-pago').textContent = '¡Pago registrado! Gracias por tu compra.';
+            localStorage.removeItem('carrito');
+            clearInterval(timerInterval);
+            document.getElementById('form-pago').style.display = 'none';
+        }
+    });
+});
+</script>
+{% endblock %}

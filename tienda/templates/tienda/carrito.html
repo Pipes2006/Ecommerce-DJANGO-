@@ -4,6 +4,9 @@
 <h2>Carrito de compras</h2>
 <div id="carrito-lista"></div>
 <div id="carrito-total"></div>
+<div style="text-align:right; margin: 20px 40px 0 0;">
+	<button id="btn-pagar" class="btn-agregar-carrito" style="font-size:1.1em; padding:10px 28px;">Pagar</button>
+</div>
 <script>
 function renderCarrito() {
 	let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
@@ -34,6 +37,9 @@ document.addEventListener('DOMContentLoaded', function() {
 			localStorage.setItem('carrito', JSON.stringify(carrito));
 			renderCarrito();
 		}
+	});
+	document.getElementById('btn-pagar').addEventListener('click', function() {
+		window.location.href = '/pago/';
 	});
 });
 </script>
