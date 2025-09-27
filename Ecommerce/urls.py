@@ -6,12 +6,12 @@ from django.conf.urls.static import static  # Importar static
 from django.http import HttpResponse
 
 def loaderio_verificacion(request):
-    return HttpResponse("loaderio-41cd192628badfe09dabef852901e9e9", content_type="text/plain")
+    return HttpResponse("loaderio-41cd1926282badfe09dabef852901e9e", content_type="text/plain")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('tienda.urls')),  # Esto incluye las URLs de la app tienda
-    path('loaderio-41cd192628badfe09dabef852901e9e9.txt', loaderio_verificacion),
+    path('loaderio-41cd1926282badfe09dabef852901e9e.txt', loaderio_verificacion),
 ]
 
 # Agregar configuración para servir archivos estáticos y medios en modo DEBUG
