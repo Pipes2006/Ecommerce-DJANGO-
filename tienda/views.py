@@ -41,11 +41,11 @@ def pago(request):
         from .models import Cliente, Pedido, DetallePedido, Producto
         cliente, created = Cliente.objects.get_or_create(
             email=email,
-            defaults={
-                'nombre': nombre,
-                'apellido': apellidos,
-                'telefono': telefono,
-                'direccion': direccion
+                defaults={
+                    'nombre': nombre,
+                    'apellido': apellidos,
+                    'telefono': telefono,
+                    'direccion': direccion
             }
         )
         if not created:

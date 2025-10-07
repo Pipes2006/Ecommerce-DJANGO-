@@ -87,8 +87,12 @@ class Pedido(models.Model):
     fecha = models.DateTimeField(auto_now_add=True)
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
+    @property
+    def identificador(self):
+        return f"ID_{self.id:03d}_Detalle_pedido"
+
     def __str__(self):
-        return f"Pedido {self.id} - Cliente {self.cliente}"
+        return self.identificador
 
 
 # DETALLE_PEDIDO
