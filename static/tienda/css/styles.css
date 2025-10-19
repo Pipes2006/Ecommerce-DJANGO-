@@ -19,25 +19,76 @@ body {
     padding: 0;
 }
 
-header, footer {
+header {
+    display: flex;
+    flex-direction: column;      /* apila logo y nav en móvil/por defecto centrado */
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    background: #f5f8fb;
+    border-bottom: 1px solid #e6eef7;
+    gap: 10px;
+}
+
+/* Mantener una fila centrada en pantallas grandes */
+@media (min-width: 800px) {
+    header {
+        flex-direction: row;    /* logo y nav en una sola línea */
+        justify-content: center; /* todo centrado horizontalmente */
+    }
+    /* separar ligeramente la nav del brand sin ocupar todo el ancho */
+    nav {
+        margin-left: 24px;
+    }
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #155ec0; /* color azul principal */
+    font-size: 16px;
+    max-height: 48px; /* limita la altura total del bloque brand */
+    justify-content: center;
+}
+
+.site-logo {
+    display: block;
+    width: auto !important;
+    height: 80px !important;      /* altura deseada */
+    max-height: 80px !important;
+    max-width: 140px !important;  /* ancho máximo */
+    object-fit: contain;
+    vertical-align: middle;
+}
+
+/* Ajuste para pantallas pequeñas */
+@media (max-width: 600px) {
+    .brand { font-size: 10px; max-height: 30px; }
+    .site-logo {
+        height: 32px !important;
+        max-width: 110px !important;
+    }
+    .site-title { font-size: 16px; }
+}
+
+nav a {
+    margin-left: 18px;
+    color: #155ec0;
+    text-decoration: none;
+    font-weight: 600;
+}
+nav a:hover {
+    text-decoration: underline;
+}
+
+footer {
     background: #1565c0;
     color: #fff;
     padding: 16px 0;
     text-align: center;
 }
-
-nav a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 18px;
-    font-weight: 500;
-    font-size: 1.1em;
-    transition: color 0.2s;
-}
-nav a:hover {
-    color: #90caf9;
-}
-
 .productos-lista {
     display: flex;
     flex-wrap: wrap;
@@ -135,4 +186,63 @@ nav a:hover {
     font-size: 1.2em;
     color: #1565c0;
     font-weight: bold;
+}
+
+/* Centrar header (logo + título + nav) */
+header {
+    display: flex;
+    flex-direction: column;      /* apila logo y nav en móvil/por defecto centrado */
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    background: #f5f8fb;
+    border-bottom: 1px solid #e6eef7;
+    gap: 10px;
+}
+
+/* Mantener una fila centrada en pantallas grandes */
+@media (min-width: 800px) {
+    header {
+        flex-direction: row;    /* logo y nav en una sola línea */
+        justify-content: center; /* todo centrado horizontalmente */
+    }
+    /* separar ligeramente la nav del brand sin ocupar todo el ancho */
+    nav {
+        margin-left: 24px;
+    }
+}
+
+/* Asegura que el bloque brand quede centrado y no crezca demasiado */
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #155ec0;
+    font-size: 16px;
+    max-height: 48px;
+    justify-content: center;
+}
+
+/* Título alineado verticalmente con el logo */
+.site-title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+/* Centrar el contenido principal */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* Asegura que la lista de productos quede centrada dentro del main */
+.productos-lista {
+    justify-content: center;
 }

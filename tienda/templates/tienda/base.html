@@ -8,11 +8,16 @@
 </head>
 <body>
     <header>
-        <h1>OnlyTech</h1>
+        <!-- logo + título -->
+        <a href="{% url 'home' %}" class="brand">
+            <img src="{% static 'tienda/img/logo.png' %}" alt="OnlyTech" class="site-logo">
+            <span class="site-title">OnlyTech</span>
+        </a>
+
         <nav>
-            <a href="/">Inicio</a>
-            <a href="/productos/">Productos</a>
-            <a href="/carrito/">Carrito</a>
+            <a href="{% url 'home' %}">Inicio</a>
+            <a href="{% url 'productos' %}">Productos</a>
+            <a href="{% url 'carrito' %}">Carrito</a>
         </nav>
     </header>
 
